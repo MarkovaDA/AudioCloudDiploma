@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1032632329211",
+    "firebase_url": "https://audiocloud-19eb8.firebaseio.com",
+    "project_id": "audiocloud-19eb8",
+    "storage_bucket": "audiocloud-19eb8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032632329211:android:4cb0dc93c23ea04f",
+        "android_client_info": {
+          "package_name": "com.markova.darya.audiocloud"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032632329211-pv4u3jjrgsnjainbeosr9i1dde9mml04.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.markova.darya.audiocloud",
+            "certificate_hash": "1d423672289da54f9527173b7f26b1f484987553"
+          }
+        },
+        {
+          "client_id": "1032632329211-mnc98al4p2655cs7ntb1ap7av3v96586.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdSP7OvNQFdas-poUMWREhkvYBd93iaYY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032632329211-mnc98al4p2655cs7ntb1ap7av3v96586.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
