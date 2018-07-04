@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,6 +28,7 @@ import com.google.firebase.storage.UploadTask;
 public class ProfileActivity extends AppCompatActivity {
     private static final int CHOOSE_IMAGE = 101;
     EditText displayNameEditText;
+    TextView emailVerifyTextView;
     ImageView imageView;
     ProgressBar uploadProgressBar;
 
@@ -42,6 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         displayNameEditText = findViewById(R.id.editTextDisplayName);
+        emailVerifyTextView = findViewById(R.id.emailVerifiedTextView);
         imageView = findViewById(R.id.imageView);
         uploadProgressBar = findViewById(R.id.progressbar);
 
@@ -59,6 +63,18 @@ public class ProfileActivity extends AppCompatActivity {
                 saveUserInformation();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (firebaseAuth.getCurrentUser() == null) {
+            finish();
+            startActivity(new Intent(this, MainActivity.class));
+        } else {
+            this.loadUserInformation();
+        }
     }
 
     @Override
@@ -146,6 +162,39 @@ public class ProfileActivity extends AppCompatActivity {
                             }
                         }
                     });
+        }
+    }
+
+    private void loadUserInformation() {
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        if (user != null) {
+            if (user.getPhotoUrl() != null) {
+                Glide.with(this)
+                        .load(user.getPhotoUrl().toString())
+                        .into(imageView);
+            }
+
+            if (user.getDisplayName() != null) {
+                displayNameEditText.setText(user.getDisplayName());
+            }
+
+            if (user.isEmailVerified()) {
+                emailVerifyTextView.setText("Email Verified");
+            } else {
+                emailVerifyTextView.setText("Email Not Verified (Click to Verify)");
+                emailVerifyTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(ProfileActivity.this, "Verification Email Sent", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+            }
         }
     }
 }

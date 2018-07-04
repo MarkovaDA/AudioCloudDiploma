@@ -44,6 +44,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Intent intent = new Intent(this, ProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+
         } else if (view.getId() == R.id.buttonSignUp) {
             registerUser();
         }
@@ -84,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 signUpProgressBar.setVisibility(View.GONE);
 
                 if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), R.string.success_regist_msg, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(SignUpActivity.this, ProfileActivity.class));
                 } else {
                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                         Toast.makeText(getApplicationContext(), R.string.email_busy_msg, Toast.LENGTH_SHORT);
