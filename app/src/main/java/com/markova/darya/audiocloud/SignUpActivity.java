@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
     EditText editTextEmail, editTextPassword;
@@ -40,14 +41,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.textViewLogin) {
-            //возможно, придется вернуться к родительской активности и не создавать новую
-            startActivity(new Intent(this, MainActivity.class));
+            Intent intent = new Intent(this, ProfileActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         } else if (view.getId() == R.id.buttonSignUp) {
             registerUser();
         }
     }
 
     private void registerUser() {
+        //добавить поле confirmPassword
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
@@ -68,6 +71,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         if (password.length() < MIN_PASSWORD_LENGTH) {
             showErrorMessage(editTextPassword, "Minimum length of password should be 6");
+
             return;
         }
 
@@ -77,12 +81,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    signUpProgressBar.setVisibility(View.GONE);
-                    if (task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), "User registered successfull", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_SHORT).show();
+                signUpProgressBar.setVisibility(View.GONE);
+
+                if (task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), R.string.success_regist_msg, Toast.LENGTH_SHORT).show();
+                } else {
+                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                        Toast.makeText(getApplicationContext(), R.string.email_busy_msg, Toast.LENGTH_SHORT);
                     }
+                    Toast.makeText(getApplicationContext(), R.string.unknown_error_msg, Toast.LENGTH_SHORT).show();
+                }
                 }
             });
     }

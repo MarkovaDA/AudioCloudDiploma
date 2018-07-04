@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">AudioCloud</string>
+    <string name="success_regist_msg">User registered successful</string>
+    <string name="email_busy_msg">This email already have registered</string>
+    <string name="name_required_msg">Display name required</string>
+    <string name="profile_updated_msg">Profile successfully update</string>
+    <string name="unknown_error_msg">Some error occurred</string>
 </resources>
