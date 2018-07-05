@@ -84,15 +84,6 @@ public class ProfileActivity extends AppCompatActivity {
         if (requestCode == CHOOSE_IMAGE && resultCode == RESULT_OK && data != null) {
             uriProfileImage = data.getData();
 
-            /*Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriProfileImage);
-                imageView.setImageBitmap(bitmap);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
-
             uploadImageToFirebaseStorage();
         }
     }

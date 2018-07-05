@@ -41,7 +41,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.textViewLogin) {
-            Intent intent = new Intent(this, ProfileActivity.class);
+            Intent intent = new Intent(this, WorkActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
 
@@ -85,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 signUpProgressBar.setVisibility(View.GONE);
 
                 if (task.isSuccessful()) {
-                    startActivity(new Intent(SignUpActivity.this, ProfileActivity.class));
+                    startActivity(new Intent(SignUpActivity.this, WorkActivity.class));
                 } else {
                     if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                         Toast.makeText(getApplicationContext(), R.string.email_busy_msg, Toast.LENGTH_SHORT);
