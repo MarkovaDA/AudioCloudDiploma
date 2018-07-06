@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.markova.darya.audiocloud">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,9 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".WorkActivity" />
+        <activity android:name=".UploadActivity">
+
+        </activity>
     </application>
+
 </manifest>

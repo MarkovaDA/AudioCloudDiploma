@@ -65,7 +65,6 @@
                 android:layout_margin="7dp"
                 android:background="@drawable/rounded_button_solid"
                 android:text="Login"
-                android:textAllCaps="false"
                 android:textColor="@color/colorAccent" />
 
             <TextView
@@ -73,11 +72,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:text="Don't have account? Sign Up"
+                android:text="Don't have account? SIGN UP"
                 android:textAlignment="center"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/colorAccent" />
-
 
         </LinearLayout>
 
