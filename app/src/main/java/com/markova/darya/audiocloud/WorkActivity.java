@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class WorkActivity extends AppCompatActivity {
 
     FloatingActionButton uploadActionBtn;
+    Toolbar actionToolbar;
+
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri selectedImageUri;
 
@@ -25,6 +28,9 @@ public class WorkActivity extends AppCompatActivity {
 
         uploadActionBtn = findViewById(R.id.uploadActBtn);
 
+        actionToolbar = findViewById(R.id.actionToolbar);
+        setSupportActionBar(actionToolbar);
+
         uploadActionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -32,7 +38,6 @@ public class WorkActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     @Override
@@ -40,7 +45,6 @@ public class WorkActivity extends AppCompatActivity {
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.work_menu, menu);
-
         return true;
     }
 

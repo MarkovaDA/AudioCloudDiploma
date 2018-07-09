@@ -22,24 +22,14 @@
         android:id="@+id/fileNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/imagePreview"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:layout_marginTop="15dp"
-        android:hint="input file name..."
-        android:paddingLeft="10dp"
-        android:ems="10"
-       />
-
-    <ProgressBar
-        android:id="@+id/uploadProgressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:visibility="gone"
-        android:layout_marginBottom="13dp" />
+        android:layout_below="@+id/imagePreview"
+        android:layout_marginTop="22dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:ems="10"
+        android:hint="input file name..."
+        android:paddingLeft="10dp" />
 
     <Button
         android:id="@+id/uploadToCloudBtn"
@@ -51,5 +41,15 @@
         android:background="@drawable/rounded_button_solid"
         android:text="Upload"
         android:textColor="@color/colorAccent" />
+
+    <ProgressBar
+        android:id="@+id/uploadProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/uploadToCloudBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="13dp"
+        android:visibility="visible" />
 
 </RelativeLayout>
