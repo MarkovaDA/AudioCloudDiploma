@@ -5,21 +5,35 @@ import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.markova.darya.audiocloud.model.ImageFile;
+import com.markova.darya.audiocloud.service.UploadFileService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WorkActivity extends AppCompatActivity {
 
     FloatingActionButton uploadActionBtn;
     Toolbar actionToolbar;
+    RecyclerView imageRecycleView;
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri selectedImageUri;
+    private ImageAdapterView imageAdapterView;
+    private List<ImageFile> imageFileList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +41,11 @@ public class WorkActivity extends AppCompatActivity {
         setContentView(R.layout.activity_work);
 
         uploadActionBtn = findViewById(R.id.uploadActBtn);
-
         actionToolbar = findViewById(R.id.actionToolbar);
+        imageRecycleView = findViewById(R.id.recycleView);
+        imageRecycleView.setHasFixedSize(true);
+        imageRecycleView.setLayoutManager(new LinearLayoutManager(this));
+
         setSupportActionBar(actionToolbar);
 
         uploadActionBtn.setOnClickListener(new View.OnClickListener() {
@@ -38,6 +55,27 @@ public class WorkActivity extends AppCompatActivity {
 
             }
         });
+        imageFileList = new ArrayList();
+
+        //подгрузка картинок из БД (использовать grid view для просмотра изображений)
+        UploadFileService.getImageFileStorage().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    ImageFile image = snapshot.getValue(ImageFile.class);
+                    imageFileList.add(image);
+                }
+
+                imageAdapterView = new ImageAdapterView(WorkActivity.this, imageFileList);
+                imageRecycleView.setAdapter(imageAdapterView);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(WorkActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override

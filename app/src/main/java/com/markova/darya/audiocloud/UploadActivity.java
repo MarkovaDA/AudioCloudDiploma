@@ -44,7 +44,7 @@ public class UploadActivity extends AppCompatActivity {
         fileNameEditText = findViewById(R.id.fileNameEditText);
         uploadImgUri = Uri.parse(getIntent().getStringExtra("imagePath"));
 
-        Picasso.get().load(uploadImgUri).into(previewImg); //загрузка preview картинки
+        Picasso.get().load(uploadImgUri).into(previewImg); //загрузка preview картинки (если большая то не грузится)
 
         uploadToCloudButton.setOnClickListener(new View.OnClickListener() {
             @Override

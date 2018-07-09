@@ -48,4 +48,8 @@ public class UploadFileService {
         return mime.getExtensionFromMimeType(contentResolver.getType(fileUri));
     }
 
+    //получаем список файлов
+    public static DatabaseReference getImageFileStorage() {
+       return databaseReference.child("uploads_info");
+    }
 }
