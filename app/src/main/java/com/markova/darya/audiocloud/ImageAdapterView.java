@@ -50,8 +50,10 @@ public class ImageAdapterView extends RecyclerView.Adapter<ImageAdapterView.Imag
         holder.titleTextView.setText(imageFile.getTitle());
         Picasso.get().load(imageFile.getUrl())
                 //.placeholder(R.drawable.upload_cloud_icon)
-                .fit()
-                .centerInside()
+                //.fit()
+                //.centerInside()
+                .resize(120,120)
+                .centerCrop()
                 .into(holder.imageView);
     }
 
