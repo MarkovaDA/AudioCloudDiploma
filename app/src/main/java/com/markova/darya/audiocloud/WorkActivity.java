@@ -29,6 +29,7 @@ public class WorkActivity extends AppCompatActivity {
     FloatingActionButton uploadActionBtn;
     Toolbar actionToolbar;
     RecyclerView imageRecycleView;
+    ValueEventListener dataNotifier;
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri selectedImageUri;
@@ -55,18 +56,24 @@ public class WorkActivity extends AppCompatActivity {
 
             }
         });
+
+
         imageFileList = new ArrayList();
+        imageAdapterView = new ImageAdapterView(WorkActivity.this, imageFileList);
 
         //подгрузка картинок из БД (использовать grid view для просмотра изображений)
-        UploadFileService.getImageFileStorage().addValueEventListener(new ValueEventListener() {
+        dataNotifier = UploadFileService.getImageFileStorage().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                imageFileList.clear();
+
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     ImageFile image = snapshot.getValue(ImageFile.class);
+                    image.setKey(snapshot.getKey());
                     imageFileList.add(image);
                 }
 
-                imageAdapterView = new ImageAdapterView(WorkActivity.this, imageFileList);
+                imageAdapterView.notifyDataSetChanged();
                 imageRecycleView.setAdapter(imageAdapterView);
             }
 
@@ -112,6 +119,14 @@ public class WorkActivity extends AppCompatActivity {
             previewIntent.putExtra("imagePath", selectedImageUri.toString());
             startActivity(previewIntent);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        UploadFileService.getImageFileStorage()
+                .removeEventListener(dataNotifier);
     }
 
     private void openFileChooser() {

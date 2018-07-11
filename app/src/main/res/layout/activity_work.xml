@@ -57,6 +57,5 @@
             android:layout_below="@+id/actionToolbar"
             android:layout_toEndOf="@+id/retrieveProgressBar"
             android:layout_toRightOf="@+id/retrieveProgressBar" />
-
     </RelativeLayout>
 </LinearLayout>

@@ -61,29 +61,33 @@ public class UploadActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                        Toast.makeText(UploadActivity.this, "Uploaded Successful", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UploadActivity.this, "Uploaded Successful", Toast.LENGTH_LONG).show();
 
-                        ImageFile uploadedImage = new ImageFile(fileNameEditText.getText().toString().trim(),
-                                taskSnapshot.getDownloadUrl().toString());
+                    ImageFile uploadedImage = new ImageFile(fileNameEditText.getText().toString().trim(),
+                            taskSnapshot.getDownloadUrl().toString());
 
-                        UploadFileService.saveMetaInfo(uploadedImage);
+                    uploadedImage.setContentType(taskSnapshot.getMetadata().getContentType());
+                    uploadedImage.setGenerateTitle(taskSnapshot.getMetadata().getName());
+                    uploadedImage.setCreationTime(taskSnapshot.getMetadata().getCreationTimeMillis());
+
+                    UploadFileService.saveMetaInfo(uploadedImage);
 
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        /*double progressValue = (100 * taskSnapshot.getBytesTransferred())/ taskSnapshot.getTotalByteCount();
-                        uploadProgressBar.setProgress((int)progressValue);*/
+                    /*double progressValue = (100 * taskSnapshot.getBytesTransferred())/ taskSnapshot.getTotalByteCount();
+                    uploadProgressBar.setProgress((int)progressValue);*/
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(UploadActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        uploadProgressBar.setVisibility(View.GONE);
+                    uploadProgressBar.setVisibility(View.GONE);
                     }
                 });
             }
